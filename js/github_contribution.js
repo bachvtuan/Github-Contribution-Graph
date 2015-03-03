@@ -134,9 +134,9 @@ if (!String.prototype.formatString) {
           }
 
           //Add Monday, Wenesday, Friday label
-          loop_html +=  '<text text-anchor="middle" class="wday" dx="-10" dy="22">M</text>'+
-                        '<text text-anchor="middle" class="wday" dx="-10" dy="48">W</text>'+
-                        '<text text-anchor="middle" class="wday" dx="-10" dy="74">F</text>';
+          loop_html +=  '<text text-anchor="middle" class="wday" dx="-10" dy="22">{0}</text>'.formatString( settings.h_days[0] )+
+                        '<text text-anchor="middle" class="wday" dx="-10" dy="48">{0}</text>'.formatString( settings.h_days[1] )+
+                        '<text text-anchor="middle" class="wday" dx="-10" dy="74">{0}</text>'.formatString( settings.h_days[2] );
           
           //Fixed size for now with width= 721 and height = 110
           var wire_html = 
@@ -187,26 +187,21 @@ if (!String.prototype.formatString) {
         var appendTooltip = function(){
           if ( $('.svg-tip').length == 0 ){
             $('body').append('<div class="svg-tip svg-tip-one-line" style="display:none" ></div>');
-          }
-          
+          }          
         }
 
-
-                // This is the easiest way to have default options.
         var settings = $.extend({
           //Default init settings.colors, user can override
           colors: ['#eeeeee','#d6e685','#8cc665','#44a340','#44a340'],
           //List of name months
           month_names: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+          h_days : ['M','W','F'],
           //Default is empty, it can be overrided
           data:[],
         }, options );
 
         var _this = $(this);
         
-          
-
-        console.log(settings);
         start();
  
     };
