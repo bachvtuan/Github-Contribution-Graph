@@ -1,4 +1,4 @@
-//Author: bachvtuan@gmail.com
+//Author: bachvtuan@gmail.com (https://dethoima.com)
 
 //Format string
 if (!String.prototype.formatString) {

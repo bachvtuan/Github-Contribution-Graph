@@ -1,10 +1,13 @@
 # Github-Contribution-Graph
-Jquery plugin to render like contribution graph on Github.
+Jquery plugin to render like contribution graph on Github when you view user's profile, You can use it to apply on other JS framework like Angularjs as well. 
 
 ## DEMO LINK
 
 [DEMO LINK](http://bachvtuan.github.io/Github-Contribution-Graph/)
 
+## Requirements
+
+Jquery library
 
 ## Usage:
 Add below code into your html content
@@ -25,8 +28,9 @@ Call lib to render graph
 
 ```
 $('#your_graph').github_graph( {
-  
+  //Default is empty list
   data: list_of_timestamp ,
+  // single text and plural text
   texts: ['completed task','completed tasks']
 });
 
