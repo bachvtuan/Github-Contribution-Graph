@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Github Contribution Graph Demo</title>
+  <script type="text/javascript" src="js/jquery-2.1.1.js" ></script>
+  <script type="text/javascript" src="js/github_contribution.js"></script>
+  <link href="css/github_contribution_graph.css" media="all" rel="stylesheet" />
+
+  <script type="text/javascript">
+    //Generate random number between min and max
+    function randomInt(min,max)
+    {
+      return Math.floor(Math.random()*(max-min+1)+min);
+    }
+
+    function getRandomTimeStamps( min, max ){
+      var return_list = [];
+      
+      var entries =  randomInt( min, max );
+      for ( var i =0; i < entries; i++ ){
+        var day = new Date();
+        // -previous date
+        //Genrate random
+        var previous_date = -randomInt(0,365);
+        day.setDate( previous_date );
+        return_list.push( day.getTime() );
+      }
+
+      return return_list;
+
+    }
+    $(document).ready(function(){
+      
+        var obj = {
+          //Generate random entries from 50-> 200 entries
+          data: getRandomTimeStamps(50,500) ,
+          texts: ['completed task','completed tasks']
+        }
+        $('#github_chart_1').github_graph( obj );
+        
+
+        var obj2 = {
+          //Generate random entries from 10-> 100 entries
+          data: getRandomTimeStamps(10,100) ,
+          texts: ['comment','comments'],
+          //override colours
+          colors:['rgba(0,0,0,0.3)','#d6e685','#8cc665','#44a340','#44a340'],
+        }
+        $('#github_chart_2').github_graph( obj2 );
+        //github_graph.start( obj2 );
+    });
+  </script>
+</head>
+
+<style type="text/css">
+  .seperate{
+    height: 20px;
+  }
+  body{
+    padding: 50px;
+  }
+</style>
+<body>
+  <h2>GITHUB CONTRIBUTION GRAPH DEMO</h2>
+  <div id="github_chart_1"></div>
+  <div class="seperate"></div>
+  <div id="github_chart_2"></div>
+</body>
+</html>
