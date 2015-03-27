@@ -134,7 +134,6 @@ if (!String.prototype.formatString) {
             month_position.shift(0);  
           }
 
-          console.log( month_position );
           for (  var i =0; i < month_position.length; i++){
             var item = month_position[i];
             var month_name =  settings.month_names[ item.month_index ];
