@@ -19,10 +19,11 @@
       var entries =  randomInt( min, max );
       for ( var i =0; i < entries; i++ ){
         var day = new Date();
-        // -previous date
+        
         //Genrate random
-        var previous_date = -randomInt(0,365);
-        day.setDate( previous_date );
+        var previous_date = randomInt(0,365);
+        day.setDate( day.getDate() - previous_date );
+        
         return_list.push( day.getTime() );
       }
 
@@ -38,7 +39,7 @@
           texts: ['completed task','completed tasks']
         });
         
-
+        /*
         $('#github_chart_2').github_graph( {
           //Generate random entries from 10-> 100 entries
           data: getRandomTimeStamps(10,100) ,
@@ -57,6 +58,7 @@
           //override colours
           colors:['gray','purple','yellow','green','red']
         });
+        */  
         
     });
   </script>
