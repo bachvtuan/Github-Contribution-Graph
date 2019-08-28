@@ -161,8 +161,8 @@ if (!String.prototype.formatString) {
           $(document).on('mouseenter', _this.find('rect'), mouseEnter );
           $(document).on('mouseleave', _this.find('rect'), mouseLeave );
 */
-          _this.find('rect').mouseenter( mouseEnter );
-          _this.find('rect').mouseleave( mouseLeave );
+          _this.find('rect').on("mouseenter", mouseEnter );
+          _this.find('rect').on("mouseleave",mouseLeave );
           appendTooltip();
           
         }
@@ -186,7 +186,7 @@ if (!String.prototype.formatString) {
           var svg_width = Math.round( svg_tip.width()/2 + 5 )  ;
           var svg_height =  svg_tip.height() *2 + 10 ;
 
-          svg_tip.css({top:target_offset.top - svg_height});
+          svg_tip.css({top:target_offset.top - svg_height - 5});
           svg_tip.css({left:target_offset.left -svg_width});
         }
         //Append tooltip to display when mouse enter the rect element
@@ -214,5 +214,3 @@ if (!String.prototype.formatString) {
     };
  
 }( jQuery ));
-
-
