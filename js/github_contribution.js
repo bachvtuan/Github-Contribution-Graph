@@ -178,7 +178,7 @@ if (!String.prototype.formatString) {
           var count = $(evt.target).attr('data-count');
           var date = $(evt.target).attr('data-date');
           
-          var count_text = ( count > 1 ) ? settings.texts[1]: settings.texts[0];
+          var count_text = ( count != 1 ) ? settings.texts[1]: settings.texts[0];
           var text = "{0} {1} on {2}".formatString( count, count_text , date );
 
           var svg_tip = $('.svg-tip').show();
