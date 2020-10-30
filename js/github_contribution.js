@@ -79,7 +79,7 @@ if (!String.prototype.formatString) {
 
           var start_date;
           if (settings.start_date == null){
-            // if set null, will get from 365 day from now
+            // if set null, will get from 365 days from now
             start_date= new Date();
             start_date.setMonth( start_date.getMonth() - 12  );
           }else{

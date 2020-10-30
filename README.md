@@ -28,7 +28,7 @@ Call lib to render graph
 
 ```
 $('#your_graph').github_graph( {
-  // Default is null will display date before 635 days from now
+  // Default is null will display date before 365 days from now
   start_date: Date Time object
   //Default is empty list
   data: list_of_timestamp ,
