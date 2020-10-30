@@ -1,4 +1,11 @@
-//Author: bachvtuan@gmail.com
+/**
+ * Jquery plugin to render like contribution graph on Github.
+ *
+ * @see       {@link https://github.com/bachvtuan/Github-Contribution-Graph}
+ * @author    bachvtuan@gmail.com
+ * @license   MIT License
+ * @since     0.1.0
+ */
 
 //Format string
 if (!String.prototype.formatString) {
@@ -70,8 +77,15 @@ if (!String.prototype.formatString) {
           settings.colors_length = settings.colors.length;
 
 
-          var start_date = new Date();
-          start_date.setMonth( start_date.getMonth() - 12  );
+          var start_date;
+          if (settings.start_date == null){
+            // if set null, will get from 365 day from now
+            start_date= new Date();
+            start_date.setMonth( start_date.getMonth() - 12  );
+          }else{
+            start_date = settings.start_date;
+          }
+          
           
           for ( var i=0; i < 7; i++ ){
             var day = start_date.getDay();
@@ -91,7 +105,7 @@ if (!String.prototype.formatString) {
           var step = 13;
 
           var month_position = [];
-          var current_date = new Date();
+          // var current_date = new Date();
           month_position.push({month_index: start_date.getMonth(), x: 0 });
           var using_month = start_date.getMonth();
           for ( var i =0; i < 52; i++ ){
@@ -100,10 +114,10 @@ if (!String.prototype.formatString) {
 
             for ( var j = 0; j < 7; j++ ){
 
-              if ( start_date > current_date ){
-                //Break the loop
-                break;
-              }
+              // if ( start_date > current_date ){
+              //   //Break the loop
+              //   break;
+              // }
               var y = j * step;
               
               var month_in_day = start_date.getMonth();
@@ -147,7 +161,7 @@ if (!String.prototype.formatString) {
           
           //Fixed size for now with width= 721 and height = 110
           var wire_html = 
-            '<svg width="721" height="110" class="js-calendar-graph-svg">'+
+            '<svg width="721" height="110" viewBox="0 0 721 110"  class="js-calendar-graph-svg">'+
               '<g transform="translate(20, 20)">'+
                 loop_html +
               '</g>'+
@@ -200,6 +214,7 @@ if (!String.prototype.formatString) {
         var settings = $.extend({
           //Default init settings.colors, user can override
           colors: ['#eeeeee','#d6e685','#8cc665','#44a340','#44a340'],
+          start_date: null,
           //List of name months
           month_names: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
           h_days : ['M','W','F'],
