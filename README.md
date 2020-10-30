@@ -28,6 +28,8 @@ Call lib to render graph
 
 ```
 $('#your_graph').github_graph( {
+  // Default is null will display date before 635 days from now
+  start_date: Date Time object
   //Default is empty list
   data: list_of_timestamp ,
   // single text and plural text
@@ -39,7 +41,8 @@ Here is full options
 
 ```
 $('#your_graph').github_graph( {
-  
+  // start from 2022, null is default
+  start_date: new Date(2022,00,00,0,0,0),
   data: list_of_timestamp ,
   // single text and plural text
   texts: ['category','categories'],
