@@ -52,5 +52,9 @@ $('#your_graph').github_graph( {
   h_days:['2','4','6'],
   //override colours
   colors:['gray','purple','yellow','green','red']
+  radius: 2,
+  click: function(data) {
+    console.log(data);
+  },
 });
 ```
