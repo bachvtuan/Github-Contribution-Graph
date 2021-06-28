@@ -12,21 +12,21 @@ Jquery library
 ## Usage:
 Add below code into your html content
 
-```
+```html
 <script type="text/javascript" src="js/github_contribution.js"></script>
 <link href="css/github_contribution_graph.css" media="all" rel="stylesheet" />
 ```
 
 Create div to render graph
 
-```
+```html
 <div id="your_graph"></div>
 
 ```
 
 Call lib to render graph
 
-```
+```js
 $('#your_graph').github_graph( {
   // Default is null will display date before 365 days from now
   start_date: Date Time object
@@ -37,9 +37,9 @@ $('#your_graph').github_graph( {
 });
 
 ```
-Here is full options
+Full options
 
-```
+```js
 $('#your_graph').github_graph( {
   // start from 2022, null is default
   start_date: new Date(2022,00,00,0,0,0),
@@ -53,4 +53,24 @@ $('#your_graph').github_graph( {
   //override colours
   colors:['gray','purple','yellow','green','red']
 });
+```
+
+Data format: Supported list of timestamp array or object({timestamp,count}).
+
+```js
+var list_of_timestamp = [1624865396654,1624865396655, ...];
+
+// or 
+var list_of_timestamp = [
+  {
+    timestamp: 1624865396654,
+    count: 2
+  },
+  {
+    timestamp: 1624865396655,
+    count: 5
+  }
+];
+
+
 ```
