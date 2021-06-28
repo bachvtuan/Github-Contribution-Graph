@@ -72,7 +72,13 @@
           month_names: ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'],
           h_days:['2','4','6'],
           //override colours
-          colors:['gray','purple','yellow','green','red']
+          colors:['gray','purple','yellow','green','red'],
+          // override item radius
+          radius: 5,
+          // callback when click on selected date
+          click: function(date, count) {
+            alert('You clicked on: ' + date + ' with count is ' + count);
+          },
         });
         
     });

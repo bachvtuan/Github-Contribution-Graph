@@ -78,6 +78,9 @@ if (!String.prototype.formatString) {
           var wrap_chart = _this;
 
           settings.colors_length = settings.colors.length;
+          var radius = settings.radius;
+          var clickCallback = settings.click;
+         
 
 
           var start_date;
@@ -135,12 +138,11 @@ if (!String.prototype.formatString) {
               var count = getCount( data_date );
               var color = getColor( count );
 
-              item_html += '<rect class="day" width="11" height="11" y="'+ y +'" fill="'+ color + '" data-count="'+ count +'" data-date="'+ data_date +'"/>';
-            }
-
-            item_html += "</g>";
-
-            loop_html += item_html;
+                  item_html += '<rect class="day" width="11" height="11" y="'+ y +'" fill="'+ color + '" data-count="'+ count +'" data-date="'+ data_date +'" rx="'+radius+'" ry="'+radius+'"/>';
+              }
+  
+              item_html += "</g>";
+              loop_html += item_html;
             
           }
 
@@ -171,6 +173,20 @@ if (!String.prototype.formatString) {
             '</svg>';
 
           wrap_chart.html(wire_html); 
+
+          $(_this).find(".day").on('click',function () {
+          
+            if (clickCallback){
+              clickCallback($(this).attr("data-date"), parseInt($(this).attr("data-count")));
+            }
+            
+          });
+
+          $(_this).find(".day").hover(function () {
+              $(this).attr("style", "stroke-width:1;stroke:rgb(1,1,1)");
+            }, function() {
+              $( this ).attr( "style", "stroke-width:0" );
+          });
 
           //Mare sure off previous event
           /*$(document).off('mouseenter', _this.find('rect'), mouseEnter );
@@ -217,6 +233,8 @@ if (!String.prototype.formatString) {
         var settings = $.extend({
           //Default init settings.colors, user can override
           colors: ['#eeeeee','#d6e685','#8cc665','#44a340','#44a340'],
+          radius: 2,
+          click: null,
           start_date: null,
           //List of name months
           month_names: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
