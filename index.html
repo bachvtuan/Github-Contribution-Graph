@@ -13,7 +13,7 @@
       return Math.floor(Math.random()*(max-min+1)+min);
     }
 
-    function getRandomTimeStamps( min, max, fromDate ){
+    function getRandomTimeStamps( min, max, fromDate, isObject ){
       var return_list = [];
       
       var entries =  randomInt( min, max );
@@ -26,8 +26,18 @@
           previous_date = - previous_date;
         }
         day.setDate( day.getDate() + previous_date );
+
+        if (isObject){
+          var count = randomInt(1,20);
+          return_list.push({
+            timestamp: day.getTime(),
+            count: count
+          });
+        }else{
+          return_list.push( day.getTime() );
+        }
         
-        return_list.push( day.getTime() );
+
       }
 
       return return_list;
@@ -38,24 +48,25 @@
 
         $('#github_chart_1').github_graph( {
           //Generate random entries from 50-> 200 entries
-          data: getRandomTimeStamps(50,500, null) ,
+          data: getRandomTimeStamps(50,500, null,false) ,
           texts: ['completed task','completed tasks']
         });
         
         
         $('#github_chart_2').github_graph( {
           //Generate random entries from 10-> 100 entries
-          data: getRandomTimeStamps(10,100, null) ,
+          data: getRandomTimeStamps(10,100, null,false) ,
           texts: ['comment','comments'],
           //override colours
           colors:['rgba(0,0,0,0.3)','#d6e685','#8cc665','#44a340','#44a340'],
         });
         // start from 1 Jan 2022
         var start_from_2022 = new Date(2022,00,00,0,0,0);  
+       
         $('#github_chart_3').github_graph( {
           start_date: start_from_2022,
           //Generate random entries from 10-> 100 entries
-          data: getRandomTimeStamps(100,600, start_from_2022) ,
+          data: getRandomTimeStamps(5,100, start_from_2022, true),
           texts: ['category','categories'],
           //Override month names
           month_names: ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'],

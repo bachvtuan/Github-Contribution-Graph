@@ -39,13 +39,16 @@ if (!String.prototype.formatString) {
           //The result will store into this varriable
           obj_timestamp = {};
           for (var i=0; i < list_timestamp.length; i++){
-            var _d = new Date( list_timestamp[i] );
+            var _type = typeof(list_timestamp[i]);            
+            var _d = _type == "number" ? new Date( list_timestamp[i] ) : new Date( list_timestamp[i].timestamp )
+            
             var display_date = getDisplayDate( _d );
+            var increase = _type == "number" ? 1 : list_timestamp[i].count ;
             if ( !obj_timestamp[ display_date ] ){
-              obj_timestamp[ display_date ] = 1;
+              obj_timestamp[ display_date ] = increase;
             }
             else{
-              obj_timestamp[ display_date ]++;
+              obj_timestamp[ display_date ] += increase;
             }
           }
         }
