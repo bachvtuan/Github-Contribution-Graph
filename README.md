@@ -53,8 +53,8 @@ $('#your_graph').github_graph( {
   //override colours
   colors:['gray','purple','yellow','green','red']
   radius: 2,
-  click: function(data) {
-    console.log(data);
+  click: function(date, count) {
+    console.log(date, count);
   },
 });
 ```

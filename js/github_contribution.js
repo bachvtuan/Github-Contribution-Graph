@@ -79,7 +79,8 @@ if (!String.prototype.formatString) {
 
           settings.colors_length = settings.colors.length;
           var radius = settings.radius;
-          var click = settings.click;
+          var clickCallback = settings.click;
+         
 
 
           var start_date;
@@ -173,11 +174,15 @@ if (!String.prototype.formatString) {
 
           wrap_chart.html(wire_html); 
 
-          $(".day").click(function (data) {
-              click($(this).attr("data-date"));
+          $(_this).find(".day").on('click',function () {
+          
+            if (clickCallback){
+              clickCallback($(this).attr("data-date"), parseInt($(this).attr("data-count")));
+            }
+            
           });
 
-          $(".day").hover(function () {
+          $(_this).find(".day").hover(function () {
               $(this).attr("style", "stroke-width:1;stroke:rgb(1,1,1)");
             }, function() {
               $( this ).attr( "style", "stroke-width:0" );
@@ -229,7 +234,7 @@ if (!String.prototype.formatString) {
           //Default init settings.colors, user can override
           colors: ['#eeeeee','#d6e685','#8cc665','#44a340','#44a340'],
           radius: 2,
-          click: function(data) {},
+          click: null,
           start_date: null,
           //List of name months
           month_names: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
