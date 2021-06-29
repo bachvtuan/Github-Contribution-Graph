@@ -67,9 +67,13 @@ if (!String.prototype.formatString) {
         }
 
         var getColor = function(count) {
-          const isLargeNumber = (element) => element > count;
-          i = settings.levels.findIndex(isLargeNumber);
-          return settings.colors[ i - 1 ];
+          if (typeof(settings.colors[0]) == "string"){
+            return count > settings.colors.length - 1 ? settings.colors[settings.colors.length-1]: settings.colors[count];
+          }
+
+          const isLargeNumber = (element) => element.count > count;
+          i = settings.colors.findIndex(isLargeNumber);
+          return i == -1 ? settings.colors[settings.colors.length -1].color: settings.colors[ i - 1 ].color;
         }
 
         var start = function(){
@@ -77,7 +81,8 @@ if (!String.prototype.formatString) {
           var wrap_chart = _this;
 
           settings.colors_length = settings.colors.length;
-          var radius = settings.radius;
+          var radius = settings.border.radius;
+          var hoverColor = settings.border.hover_color;
           var clickCallback = settings.click;
          
 
@@ -183,17 +188,11 @@ if (!String.prototype.formatString) {
           });
 
           $(_this).find(".day").hover(function () {
-              $(this).attr("style", "stroke-width: 1; stroke: "+ settings.hover_border_color);
+              $(this).attr("style", "stroke-width: 1; stroke: "+ hoverColor);
             }, function() {
               $( this ).attr( "style", "stroke-width:0" );
           });
 
-          //Mare sure off previous event
-          /*$(document).off('mouseenter', _this.find('rect'), mouseEnter );
-          $(document).off('mouseleave', _this.find('rect'), mouseLeave );
-          $(document).on('mouseenter', _this.find('rect'), mouseEnter );
-          $(document).on('mouseleave', _this.find('rect'), mouseLeave );
-           */
           _this.find('rect').on("mouseenter", mouseEnter );
           _this.find('rect').on("mouseleave",mouseLeave );
           appendTooltip();
@@ -231,11 +230,11 @@ if (!String.prototype.formatString) {
         }
 
         var settings = $.extend({
-          //Default init settings.colors, user can override
-          levels: [0, 1, 10, 20, 30],
           colors: ['#eeeeee','#d6e685','#8cc665','#44a340','#44a340'],
-          radius: 2,
-          hover_border_color: "#999",
+          border:{
+            radius: 2,
+            hover_color: "#999"
+          },
           click: null,
           start_date: null,
           //List of name months

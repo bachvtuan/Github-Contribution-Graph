@@ -51,8 +51,20 @@ $('#your_graph').github_graph( {
   //Override horizontal day name
   h_days:['2','4','6'],
   //override colours
-  colors:['gray','purple','yellow','green','red']
-  radius: 2,
+  colors:['gray','purple','yellow','green','red'],
+  /** List object of color and count also supported
+  colors:[
+    { count:0, color:'gray' },
+    { count:5, color:'purple' },
+    { count:10, color:'yellow' },
+    { count:15, color:'green' },
+    { count:20, color:'red' }
+  ],
+  **/
+  border:{
+    radius: 5,
+    hover_color: "red"
+  },
   click: function(date, count) {
     console.log(date, count);
   },
