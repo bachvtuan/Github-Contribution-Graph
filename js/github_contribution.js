@@ -66,11 +66,11 @@ if (!String.prototype.formatString) {
           return 0;
         }
 
-        var getColor = function(count){
-          if ( count >= settings.colors.length ){
-            return settings.colors[  settings.colors.length - 1 ];
-          }
-          return settings.colors[ count ];
+        var getColor = function(count) {
+          const isLargeNumber = (element) => element > count;
+          i = settings.levels.findIndex(isLargeNumber);
+
+          return i == -1 ? settings.colors[settings.colors.length -1]: settings.colors[ i - 1 ];
         }
 
         var start = function(){
@@ -84,66 +84,67 @@ if (!String.prototype.formatString) {
 
 
           var start_date;
-          if (settings.start_date == null){
-            // if set null, will get from 365 day from now
-            start_date= new Date();
-            start_date.setMonth( start_date.getMonth() - 12  );
-          }else{
-            start_date = settings.start_date;
+          if (settings.start_date == null) {
+              // if set null, will get from 365 days from now
+              start_date= new Date();
+              start_date.setMonth( start_date.getMonth() - 12  );
+              start_date.setDate(start_date.getDate() + 1)
+           } else {
+              // formats:
+              // - YYYY-MM-DD
+              // - YYYY/MM/DD
+              start_date = new Date(settings.start_date);
           }
-          
-          
-          for ( var i=0; i < 7; i++ ){
-            var day = start_date.getDay();
-            if (day == 0){
-              //sunday
-              break;
-            }
-            else{
-              //Loop until get Sunday
-              start_date.setDate( start_date.getDate() + 1 );
-            }
-          }
+
+          end_date = new Date(start_date);
+          end_date.setMonth(end_date.getMonth() + 12);
+          end_date.setDate(end_date.getDate() - 1);
 
           var loop_html = "";
-
-          //One year has 52 weeks
           var step = 13;
 
           var month_position = [];
-          // var current_date = new Date();
           month_position.push({month_index: start_date.getMonth(), x: 0 });
           var using_month = start_date.getMonth();
-          for ( var i =0; i < 52; i++ ){
-            var g_x =i * step;
-            var item_html = '<g transform="translate(' + g_x.toString() + ',0)">';
 
-            for ( var j = 0; j < 7; j++ ){
 
-              // if ( start_date > current_date ){
-              //   //Break the loop
-              //   break;
-              // }
-              var y = j * step;
-              
+          var week = 0;
+          var g_x = week * step;
+          var item_html = '<g transform="translate(' + g_x.toString() + ', 0)">';
+          
+          for(; start_date.getTime() <= end_date.getTime(); start_date.setDate(start_date.getDate() + 1)) {
+
+              if(start_date.getDay() == 0) {
+                  var item_html = '<g transform="translate(' + g_x.toString() + ', 0)">';
+              }
+
               var month_in_day = start_date.getMonth();
               var data_date = getDisplayDate( start_date );
-              //Check first day in week
-              if ( j == 0 && month_in_day != using_month ){
+
+              if ( start_date.getDay() == 0 && month_in_day != using_month ){
                   using_month = month_in_day;
                   month_position.push({month_index: using_month, x: g_x });
               }
-              //move on to next day
-              start_date.setDate( start_date.getDate() + 1 );
               var count = getCount( data_date );
               var color = getColor( count );
 
-                  item_html += '<rect class="day" width="11" height="11" y="'+ y +'" fill="'+ color + '" data-count="'+ count +'" data-date="'+ data_date +'" rx="'+radius+'" ry="'+radius+'"/>';
-              }
-  
+              var y = start_date.getDay() * step;
+              item_html += '<rect class="day" width="11" height="11" y="'+ y +'" fill="'+ color + '" data-count="'+ count +'" data-date="'+ data_date +'" rx="'+radius+'" ry="'+radius+'"/>';  
+
+              if(start_date.getDay() == 6) {
+                  item_html += "</g>";
+                  loop_html += item_html;
+
+                  item_html = null;
+                  
+                  week ++;
+                  g_x = week * step;
+              }            
+          }
+
+          if(item_html != null) {
               item_html += "</g>";
               loop_html += item_html;
-            
           }
 
           
@@ -183,7 +184,7 @@ if (!String.prototype.formatString) {
           });
 
           $(_this).find(".day").hover(function () {
-              $(this).attr("style", "stroke-width:1;stroke:rgb(1,1,1)");
+              $(this).attr("style", "stroke-width: 1; stroke: "+ settings.hover_border_color);
             }, function() {
               $( this ).attr( "style", "stroke-width:0" );
           });
@@ -193,7 +194,7 @@ if (!String.prototype.formatString) {
           $(document).off('mouseleave', _this.find('rect'), mouseLeave );
           $(document).on('mouseenter', _this.find('rect'), mouseEnter );
           $(document).on('mouseleave', _this.find('rect'), mouseLeave );
-*/
+           */
           _this.find('rect').on("mouseenter", mouseEnter );
           _this.find('rect').on("mouseleave",mouseLeave );
           appendTooltip();
@@ -232,8 +233,10 @@ if (!String.prototype.formatString) {
 
         var settings = $.extend({
           //Default init settings.colors, user can override
+          levels: [0, 1, 10, 20, 30],
           colors: ['#eeeeee','#d6e685','#8cc665','#44a340','#44a340'],
           radius: 2,
+          hover_border_color: "#999",
           click: null,
           start_date: null,
           //List of name months
