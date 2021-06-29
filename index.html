@@ -74,8 +74,14 @@
           h_days:['2','4','6'],
           // define map count with color
           levels: [0, 1, 2, 3, 4],
-          //override colours
-          colors:['gray','purple','yellow','green','red'],
+          //override colours with custom count
+          colors:[
+            {count:0,color:'gray'},
+            {count:5,color:'purple'},
+            {count:10,color:'yellow'},
+            {count:15,color:'green'},
+            {count:20, color:'red'}
+          ],
           // override item radius
           radius: 5,
           // callback when click on selected date

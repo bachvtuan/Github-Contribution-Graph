@@ -67,10 +67,13 @@ if (!String.prototype.formatString) {
         }
 
         var getColor = function(count) {
-          const isLargeNumber = (element) => element > count;
-          i = settings.levels.findIndex(isLargeNumber);
+          if (typeof(settings.colors[0]) == "string"){
+            return count > settings.colors.length - 1 ? settings.colors[settings.colors.length-1]: settings.colors[count];
+          }
 
-          return i == -1 ? settings.colors[settings.colors.length -1]: settings.colors[ i - 1 ];
+          const isLargeNumber = (element) => element.count > count;
+          i = settings.colors.findIndex(isLargeNumber);
+          return i == -1 ? settings.colors[settings.colors.length -1].color: settings.colors[ i - 1 ].color;
         }
 
         var start = function(){
@@ -232,8 +235,6 @@ if (!String.prototype.formatString) {
         }
 
         var settings = $.extend({
-          //Default init settings.colors, user can override
-          levels: [0, 1, 10, 20, 30],
           colors: ['#eeeeee','#d6e685','#8cc665','#44a340','#44a340'],
           radius: 2,
           hover_border_color: "#999",
