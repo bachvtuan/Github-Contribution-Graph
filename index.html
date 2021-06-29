@@ -68,12 +68,13 @@
           //Generate random entries from 10-> 100 entries
           data: getRandomTimeStamps(5,100, start_from_2022, true),
           texts: ['category','categories'],
-          hover_border_color:"red",
+          border:{
+            radius: 5,
+            hover_color: "red"
+          },
           //Override month names
           month_names: ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'],
           h_days:['2','4','6'],
-          // define map count with color
-          levels: [0, 1, 2, 3, 4],
           //override colours with custom count
           colors:[
             {count:0,color:'gray'},
@@ -82,8 +83,6 @@
             {count:15,color:'green'},
             {count:20, color:'red'}
           ],
-          // override item radius
-          radius: 5,
           // callback when click on selected date
           click: function(date, count) {
             alert('You clicked on: ' + date + ' with count is ' + count);
